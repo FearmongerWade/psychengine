@@ -1084,7 +1084,6 @@ class CharacterEditorState extends MusicBeatState implements PsychUIEventHandler
 		stageFront.setGraphicSize(Std.int(stageFront.width * 1.1));
 		stageFront.updateHitbox();
 		add(stageFront);
-		#end
 
 		dadPosition.set(100, 100);
 		bfPosition.set(770, 100);

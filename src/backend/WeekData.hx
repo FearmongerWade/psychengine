@@ -44,7 +44,6 @@ class WeekData {
 		var weekFile:WeekFile = {
 			songs: [["Bopeebo", "face", [146, 113, 253]], ["Fresh", "face", [146, 113, 253]], ["Dad Battle", "face", [146, 113, 253]]],
 			weekCharacters: ['bf', 'bf', 'gf'],
-			#end
 			weekBackground: 'stage',
 			weekBefore: 'tutorial',
 			storyName: 'Your New Week',

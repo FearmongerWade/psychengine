@@ -161,10 +161,7 @@ class BaseStage extends FlxBasic
 	inline private function get_dadGroup():FlxSpriteGroup return game.dadGroup;
 	inline private function get_gfGroup():FlxSpriteGroup return game.gfGroup;
 
-	inline private function get_unspawnNotes():Array<Note>
-	{
-		return cast game.unspawnNotes;
-	}
+	inline private function get_unspawnNotes():Array<Note> return cast game.unspawnNotes;
 	
 	inline private function get_camGame():FlxCamera return game.camGame;
 	inline private function get_camHUD():FlxCamera return game.camHUD;

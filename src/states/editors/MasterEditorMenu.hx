@@ -30,7 +30,6 @@ class MasterEditorMenu extends MusicBeatState
 	{
 		FlxG.camera.bgColor = FlxColor.BLACK;
 		#if DISCORD_ALLOWED
-		// Updating Discord Rich Presence
 		DiscordClient.changePresence("Editors Main Menu", null);
 		#end
 
@@ -62,9 +61,7 @@ class MasterEditorMenu extends MusicBeatState
 		add(directoryTxt);
 		
 		for (folder in Mods.getModDirectories())
-		{
 			directories.push(folder);
-		}
 
 		var found:Int = directories.indexOf(Mods.currentModDirectory);
 		if(found > -1) curDirectory = found;
@@ -78,34 +75,21 @@ class MasterEditorMenu extends MusicBeatState
 
 	override function update(elapsed:Float)
 	{
-		if (controls.UI_UP_P)
-		{
-			changeSelection(-1);
-		}
-		if (controls.UI_DOWN_P)
-		{
-			changeSelection(1);
-		}
+		if (controls.UI_UP_P || controls.UI_DOWN_P)
+			changeSelection(controls.UI_UP_P ? -1 : 1);
 		#if MODS_ALLOWED
-		if(controls.UI_LEFT_P)
-		{
-			changeDirectory(-1);
-		}
-		if(controls.UI_RIGHT_P)
-		{
-			changeDirectory(1);
-		}
+		if(controls.UI_LEFT_P || controls.UI_RIGHT_P)
+			changeDirectory(controls.UI_LEFT_P ? -1 : 1);
 		#end
 
 		if (controls.BACK)
-		{
 			MusicBeatState.switchState(new MainMenuState());
-		}
 
 		if (controls.ACCEPT)
 		{
-			switch(options[curSelected]) {
-				case 'Chart Editor'://felt it would be cool maybe
+			switch(options[curSelected]) 
+			{
+				case 'Chart Editor':
 					LoadingState.loadAndSwitchState(new ChartingState(), false);
 				case 'Character Editor':
 					LoadingState.loadAndSwitchState(new CharacterEditorState(Character.DEFAULT_CHARACTER, false));
@@ -146,13 +130,7 @@ class MasterEditorMenu extends MusicBeatState
 	function changeDirectory(change:Int = 0)
 	{
 		FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
-
-		curDirectory += change;
-
-		if(curDirectory < 0)
-			curDirectory = directories.length - 1;
-		if(curDirectory >= directories.length)
-			curDirectory = 0;
+		curDirectory = FlxMath.wrap(curDirectory + change, 0, directories.length - 1);
 	
 		WeekData.setDirectoryFromWeek();
 		if(directories[curDirectory] == null || directories[curDirectory].length < 1)
