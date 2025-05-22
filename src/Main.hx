@@ -6,15 +6,10 @@ import openfl.Lib;
 import openfl.display.Sprite;
 import openfl.events.Event;
 import openfl.display.StageScaleMode;
-import lime.app.Application;
 
 #if HSCRIPT_ALLOWED
 import crowplexus.iris.Iris;
 import psychlua.HScript.HScriptInfos;
-#end
-
-#if (linux || mac)
-import lime.graphics.Image;
 #end
 
 #if desktop
@@ -55,16 +50,6 @@ class Main extends Sprite
 	{
 		super();
 
-		var game = new FlxGame(game.width, game.height, InitState, game.framerate, game.framerate, game.skipSplash, game.startFullscreen);
-		@:privateAccess game._customSoundTray = backend.SoundTray;
-		addChild(game);
-
-		addChild(fpsVar = new FPSCounter(10, 5, 0xFFFFFF));
-		fpsVar.visible = Settings.data.showFPS;
-
-		Lib.current.stage.align = "tl";
-		Lib.current.stage.scaleMode = StageScaleMode.NO_SCALE;
-
 		#if CRASH_HANDLER
 		Lib.current.loaderInfo.uncaughtErrorEvents.addEventListener(UncaughtErrorEvent.UNCAUGHT_ERROR, onCrash);
 		#end
@@ -77,10 +62,17 @@ class Main extends Sprite
 		backend.Native.fixScaling();
 		#end
 
-		#if (linux || mac) // fix the app icon not showing up on the Linux Panel / Mac Dock
-		var icon = Image.fromFile("icon.png");
-		Lib.current.stage.window.setIcon(icon);
-		#end
+		// Settings.load();
+
+		var game = new FlxGame(game.width, game.height, InitState, game.framerate, game.framerate, game.skipSplash, game.startFullscreen);
+		@:privateAccess game._customSoundTray = backend.SoundTray;
+		addChild(game);
+
+		addChild(fpsVar = new FPSCounter(10, 5, 0xFFFFFF));
+		fpsVar.visible = Settings.data.showFPS;
+
+		Lib.current.stage.align = "tl";
+		Lib.current.stage.scaleMode = StageScaleMode.NO_SCALE;
 
 		// shader coords fix
 		FlxG.signals.gameResized.add(function (w, h) 
@@ -136,7 +128,7 @@ class Main extends Sprite
 		File.saveContent('./crash/$date.txt', '$errMsg\n');
 		Sys.println('\n$errMsg');
 
-		Application.current.window.alert(errMsg, "Error!");
+		lime.app.Application.current.window.alert(errMsg, "Error!");
 		#if DISCORD_ALLOWED DiscordClient.shutdown(); #end 
 		Sys.exit(1);
 	}

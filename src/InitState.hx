@@ -18,24 +18,22 @@ class InitState extends flixel.FlxState
 
         AlphaCharacter.loadAlphabetData();
         Controls.instance = new Controls();
-        Settings.load();
         Settings.loadDefaultKeys();
-
+        Settings.load();
         Highscore.load();
 
         #if ACHIEVEMENTS_ALLOWED
         Achievements.load();
         #end
 
-        #if DISCORD_ALLOWED
-		DiscordClient.prepare();
-		#end
-
         if (FlxG.save.data.weekCompleted != null)
 			states.StoryMenuState.weekCompleted = FlxG.save.data.weekCompleted;
 
 		if(FlxG.save.data != null && FlxG.save.data.fullscreen)
 			FlxG.fullscreen = FlxG.save.data.fullscreen;
+
+        if (FlxG.save.data.volume != null) 
+            FlxG.sound.volume = FlxG.save.data.volume;
 
         // -- Mods & Lua -- //
 

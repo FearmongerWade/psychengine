@@ -204,11 +204,6 @@ class Settings
 			for (name => value in savedMap) data.gameplaySettings.set(name, value);
 		}
 
-		if(FlxG.save.data.volume != null)
-			FlxG.sound.volume = FlxG.save.data.volume;
-		if (FlxG.save.data.mute != null)
-			FlxG.sound.muted = FlxG.save.data.mute;
-
 		#if DISCORD_ALLOWED DiscordClient.check(); #end
 
 		// controls on a separate save file
@@ -234,7 +229,8 @@ class Settings
 
 	inline public static function getGameplaySetting(name:String, defaultValue:Dynamic = null, ?customDefaultValue:Bool = false):Dynamic
 	{
-		if(!customDefaultValue) defaultValue = defaultData.gameplaySettings.get(name);
+		if(!customDefaultValue) 
+			defaultValue = defaultData.gameplaySettings.get(name);
 		return (data.gameplaySettings.exists(name) ? data.gameplaySettings.get(name) : defaultValue);
 	}
 
