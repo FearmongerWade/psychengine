@@ -7,18 +7,17 @@
 
 	<!-- Project Settings & Customization -->
 
+	<define name="ACHIEVEMENTS_ALLOWED" />
+	<define name="DISCORD_ALLOWED" />
 	<define name="MODS_ALLOWED" if="desktop" />
 	<define name="HSCRIPT_ALLOWED" if="desktop" />
 	<define name="LUA_ALLOWED" if="desktop" />
-	<define name="ACHIEVEMENTS_ALLOWED" />
-	<define name="DISCORD_ALLOWED" />
-	<define name="CRASH_HANDLER" if="desktop release" />
+	<define name="VIDEOS_ALLOWED" if="desktop || android" unless="32bits"/>
 	
+	<define name="CRASH_HANDLER" if="desktop release" />
 	<define name="MULTITHREADED_LOADING" /> <!-- UNCOMMENTING THIS LINE WILL ENABLE MULTITHREADED LOADING, WHICH IMPROVES LOADING TIMES, BUT APPARENTLY CAN FREEZE THE GAME ON SONG LOAD IN OLDER PCs? -->
 	<define name="SHOW_LOADING_SCREEN" />
-
-	<define name="BASE_GAME_FILES" />
-	<define name="VIDEOS_ALLOWED" if="desktop || android" unless="32bits"/>
+	
 
 	<!-- Libraries -->
 
@@ -31,11 +30,6 @@
 	<haxelib name="hxvlc" if="VIDEOS_ALLOWED"/>
 	<haxelib name="hxdiscord_rpc" if="DISCORD_ALLOWED"/>
 	<haxelib name="flxanimate"/>
-
-	<section if="BASE_GAME_FILES">
-		<haxelib name="grig.audio" if="BASE_GAME_FILES"/>
-		<haxelib name="funkin.vis" if="BASE_GAME_FILES"/>
-	</section>
 
 	<!-- Assets -->
 

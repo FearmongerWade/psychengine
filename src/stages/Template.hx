@@ -1,7 +1,5 @@
 package stages;
 
-import stages.objects.*;
-
 class Template extends BaseStage
 {
 	/*
