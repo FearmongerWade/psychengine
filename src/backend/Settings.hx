@@ -188,8 +188,6 @@ class Settings
 
 	public static function load() 
 	{
-		FlxG.save.bind('settings', CoolUtil.getSavePath());
-
 		for (key in Reflect.fields(data))
 			if (key != 'gameplaySettings' && Reflect.hasField(FlxG.save.data, key))
 				Reflect.setField(data, key, Reflect.field(FlxG.save.data, key));
@@ -206,10 +204,12 @@ class Settings
 			for (name => value in savedMap) data.gameplaySettings.set(name, value);
 		}
 
-		#if DISCORD_ALLOWED DiscordClient.check(); #end
+		if(FlxG.save.data.volume != null)
+			FlxG.sound.volume = FlxG.save.data.volume;
+		if (FlxG.save.data.mute != null)
+			FlxG.sound.muted = FlxG.save.data.mute;
 
-		if(FlxG.save.data.volume != null) FlxG.sound.volume = FlxG.save.data.volume;
-		if (FlxG.save.data.mute != null) FlxG.sound.muted = FlxG.save.data.mute;
+		#if DISCORD_ALLOWED DiscordClient.check(); #end
 
 		// controls on a separate save file
 		var save:FlxSave = new FlxSave();
