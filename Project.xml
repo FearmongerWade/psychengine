@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project>
+	<!-- Application Settings -->
+
+	<app title="Friday Night Funkin': Psych Engine" file="PsychEngine" main="Main" version="0.2.8" company="ShadowMario" />
+	<window width="1280" height="720" fps="60" background="#000000" hardware="true" vsync="false" />
+
+	<!-- Project Settings & Customization -->
+
+	<define name="MODS_ALLOWED" if="desktop" />
+	<define name="HSCRIPT_ALLOWED" if="desktop" />
+	<define name="LUA_ALLOWED" if="desktop" />
+	<define name="ACHIEVEMENTS_ALLOWED" />
+	<define name="DISCORD_ALLOWED" />
+	<define name="CRASH_HANDLER" if="desktop release" />
+	
+	<define name="MULTITHREADED_LOADING" /> <!-- UNCOMMENTING THIS LINE WILL ENABLE MULTITHREADED LOADING, WHICH IMPROVES LOADING TIMES, BUT APPARENTLY CAN FREEZE THE GAME ON SONG LOAD IN OLDER PCs? -->
+	<define name="SHOW_LOADING_SCREEN" />
+
+	<define name="BASE_GAME_FILES" />
+	<define name="VIDEOS_ALLOWED" if="desktop || android" unless="32bits"/>
+
+	<!-- Libraries -->
+
+	<haxelib name="flixel" version="5.6.1"/>
+	<haxelib name="flixel-addons" version="3.2.2"/>
+	<haxelib name="tjson" version="1.4.0"/>
+
+	<haxelib name="linc_luajit" if="LUA_ALLOWED"/>
+	<haxelib name="hscript-iris" if="HSCRIPT_ALLOWED" version="1.1.3"/>
+	<haxelib name="hxvlc" if="VIDEOS_ALLOWED"/>
+	<haxelib name="hxdiscord_rpc" if="DISCORD_ALLOWED"/>
+	<haxelib name="flxanimate"/>
+
+	<section if="BASE_GAME_FILES">
+		<haxelib name="grig.audio" if="BASE_GAME_FILES"/>
+		<haxelib name="funkin.vis" if="BASE_GAME_FILES"/>
+	</section>
+
+	<!-- Assets -->
+
+	<classpath name="src" />
+
+	<assets path="assets"/>
+	<assets path="assets/videos"        if="VIDEOS_ALLOWED"/>
+
+	<section if="MODS_ALLOWED">
+		<assets path='example_mods' rename='mods' embed='false' type='template' unless="mac"/>
+		<assets path='example_mods' rename='mods' embed='false' if="mac"/>
+		<assets path='list.txt' rename='modsList.txt' />
+	</section>
+
+	<!-- OpenAL config -->
+
+	<section if="desktop">
+		<assets path="alsoft.txt" rename="plugins/alsoft.ini" type="text" if="windows"/>
+		<assets path="alsoft.txt" rename="plugins/alsoft.conf" type="text" unless="windows"/>
+	</section>
+
+	<!-- Misc. -->
+
+	<haxedef name="DISCORD_DISABLE_IO_THREAD" if="hxdiscord_rpc" />
+	<haxedef name="NO_PRECOMPILED_HEADERS" if="linux" />
+
+	<haxelib name="hxcpp-debug-server" if="debug"/>
+	<haxedef name="HXC_LIBVLC_LOGGING" if="VIDEOS_ALLOWED debug" />
+	<haxedef name="HXVLC_NO_SHARE_DIRECTORY" if="VIDEOS_ALLOWED" />
+	<define name="x86_BUILD" if="32bits" />
+
+	<haxedef name="FLX_NO_FOCUS_LOST_SCREEN" />
+	<haxedef name="FLX_NO_DEBUG" unless="debug" />
+
+	<haxedef name="HXC_DEBUG_TRACE" if="debug" />
+
+	<haxedef name="NAPE_RELEASE_BUILD" unless="debug" />
+	
+	<haxedef name="HXCPP_CHECK_POINTER" if="CRASH_HANDLER" />
+	<haxedef name="HXCPP_STACK_LINE" if="CRASH_HANDLER" />
+	<haxedef name="HXCPP_STACK_TRACE" if="CRASH_HANDLER" />
+
+	<haxedef name='no-deprecation-warnings' />
+	<haxedef name="message.reporting" value="pretty" />
+
+	<haxeflag name="--macro" value="allowPackage('flash')" />
+	<haxeflag name="--macro" value="include('my.pack')" />
+
+	<haxedef name="LINC_LUA_RELATIVE_DYNAMIC_LIB"/> <!-- stable luas PUT AFTER FIRST LINE WITH APP NAME AND ETC -->
+	<haxedef name="hscriptPos" if="HSCRIPT_ALLOWED" />
+
+	<set name="BUILD_DIR" value="_export/debug" if="debug" />
+	<set name="BUILD_DIR" value="_export/release" unless="debug" />
+	<set name="BUILD_DIR" value="_export/32bit" if="32bits" />
+
+	<!-- Icons -->
+
+	<assets path='icons/iconOG.png' rename='icon.png' if="linux || mac" />
+	
+	<icon path="icons/icon16.png" size='16'/>
+	<icon path="icons/iconOG.png" />
+</project>
