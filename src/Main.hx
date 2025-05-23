@@ -62,8 +62,6 @@ class Main extends Sprite
 		backend.Native.fixScaling();
 		#end
 
-		// Settings.load();
-
 		var game = new FlxGame(game.width, game.height, InitState, game.framerate, game.framerate, game.skipSplash, game.startFullscreen);
 		@:privateAccess game._customSoundTray = backend.SoundTray;
 		addChild(game);

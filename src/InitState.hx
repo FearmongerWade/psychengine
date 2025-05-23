@@ -1,9 +1,7 @@
 class InitState extends flixel.FlxState
 {
-    override function create():Void
+    override public function create():Void
     {
-        super.create();
-
         // -- Flixel -- //
 
         FlxG.fixedTimestep = false;
@@ -32,9 +30,6 @@ class InitState extends flixel.FlxState
 		if(FlxG.save.data != null && FlxG.save.data.fullscreen)
 			FlxG.fullscreen = FlxG.save.data.fullscreen;
 
-        if (FlxG.save.data.volume != null) 
-            FlxG.sound.volume = FlxG.save.data.volume;
-
         // -- Mods & Lua -- //
 
         #if LUA_ALLOWED
@@ -43,6 +38,8 @@ class InitState extends flixel.FlxState
         Mods.loadTopMod();
 
         // -- -- -- //
+
+        super.create();
 
         Paths.clearStoredMemory();
         Paths.clearUnusedMemory();

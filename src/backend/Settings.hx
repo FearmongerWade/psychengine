@@ -204,6 +204,11 @@ class Settings
 			for (name => value in savedMap) data.gameplaySettings.set(name, value);
 		}
 
+		if(FlxG.save.data.volume != null)
+			FlxG.sound.volume = FlxG.save.data.volume;
+		if (FlxG.save.data.mute != null)
+			FlxG.sound.muted = FlxG.save.data.mute;
+
 		#if DISCORD_ALLOWED DiscordClient.check(); #end
 
 		// controls on a separate save file
